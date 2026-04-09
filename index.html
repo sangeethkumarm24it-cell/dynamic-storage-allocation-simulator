@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dynamic Storage Allocation Simulator</title>
-  <meta name="description" content="Interactive simulator for First Fit, Best Fit, and Worst Fit memory allocation algorithms with real-time visualization and fragmentation analysis." />
+  <meta name="description"
+    content="Interactive simulator for First Fit, Best Fit, and Worst Fit memory allocation algorithms with real-time visualization and fragmentation analysis." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <!-- HEADER -->
   <header class="header">
@@ -17,16 +22,28 @@
       <div class="logo">
         <div class="logo-icon">
           <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-            <rect x="2" y="2" width="7" height="11" rx="2" fill="url(#g1)"/>
-            <rect x="11" y="2" width="7" height="7" rx="2" fill="url(#g2)"/>
-            <rect x="20" y="2" width="6" height="15" rx="2" fill="url(#g3)"/>
-            <rect x="2" y="15" width="7" height="11" rx="2" fill="url(#g4)" opacity="0.5"/>
-            <rect x="11" y="11" width="7" height="15" rx="2" fill="url(#g2)"/>
+            <rect x="2" y="2" width="7" height="11" rx="2" fill="url(#g1)" />
+            <rect x="11" y="2" width="7" height="7" rx="2" fill="url(#g2)" />
+            <rect x="20" y="2" width="6" height="15" rx="2" fill="url(#g3)" />
+            <rect x="2" y="15" width="7" height="11" rx="2" fill="url(#g4)" opacity="0.5" />
+            <rect x="11" y="11" width="7" height="15" rx="2" fill="url(#g2)" />
             <defs>
-              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
-              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#06b6d4"/><stop offset="1" stop-color="#3b82f6"/></linearGradient>
-              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10b981"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
-              <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#8b5cf6" />
+              </linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#06b6d4" />
+                <stop offset="1" stop-color="#3b82f6" />
+              </linearGradient>
+              <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#10b981" />
+                <stop offset="1" stop-color="#06b6d4" />
+              </linearGradient>
+              <linearGradient id="g4" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#6366f1" />
+                <stop offset="1" stop-color="#8b5cf6" />
+              </linearGradient>
             </defs>
           </svg>
         </div>
@@ -34,11 +51,6 @@
           <div class="logo-title">MemAlloc Simulator</div>
           <div class="logo-sub">Dynamic Storage Allocation</div>
         </div>
-      </div>
-      <div class="header-badges">
-        <span class="badge badge-ff">First Fit</span>
-        <span class="badge badge-bf">Best Fit</span>
-        <span class="badge badge-wf">Worst Fit</span>
       </div>
     </div>
   </header>
@@ -56,7 +68,12 @@
         <div class="card input-card">
           <div class="card-header">
             <div class="card-icon card-icon--purple">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="2" y="7" width="20" height="14" rx="2" />
+                <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+                <line x1="12" y1="12" x2="12" y2="16" />
+                <line x1="10" y1="14" x2="14" y2="14" />
+              </svg>
             </div>
             <h2 class="card-title">Memory Blocks</h2>
           </div>
@@ -74,14 +91,18 @@
         <div class="card input-card">
           <div class="card-header">
             <div class="card-icon card-icon--cyan">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 20v-2a6 6 0 0 1 12 0v2"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M6 20v-2a6 6 0 0 1 12 0v2" />
+              </svg>
             </div>
             <h2 class="card-title">Processes</h2>
           </div>
           <div class="form-group">
             <label class="form-label" for="num-processes">Number of Processes</label>
             <div class="input-row">
-              <input type="number" id="num-processes" class="form-input" min="1" max="12" value="5" placeholder="1–12" />
+              <input type="number" id="num-processes" class="form-input" min="1" max="12" value="5"
+                placeholder="1–12" />
               <button class="btn btn-secondary" id="gen-proc-btn" onclick="generateProcessInputs()">Generate</button>
             </div>
           </div>
@@ -89,22 +110,19 @@
         </div>
       </div>
 
-      <!-- Quick Presets -->
-      <div class="presets-row">
-        <span class="presets-label">Quick Presets:</span>
-        <button class="preset-btn" onclick="applyPreset('classic')">Classic Demo</button>
-        <button class="preset-btn" onclick="applyPreset('tight')">Tight Memory</button>
-        <button class="preset-btn" onclick="applyPreset('overflow')">Process Overflow</button>
-        <button class="preset-btn" onclick="applyPreset('exact')">Exact Fit</button>
-      </div>
 
       <div class="simulate-row">
         <button class="btn btn-primary btn-simulate" id="simulate-btn" onclick="runSimulation()">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="5 3 19 12 5 21 5 3" />
+          </svg>
           Run Simulation
         </button>
         <button class="btn btn-ghost" onclick="resetAll()">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.58"/></svg>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10" />
+            <path d="M3.51 15a9 9 0 1 0 .49-3.58" />
+          </svg>
           Reset
         </button>
       </div>
@@ -146,7 +164,11 @@
       <div class="card comparison-card" id="comparison-section">
         <div class="card-header">
           <div class="card-icon card-icon--green">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10" />
+              <line x1="12" y1="20" x2="12" y2="4" />
+              <line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
           </div>
           <h2 class="card-title">Algorithm Comparison</h2>
         </div>
@@ -163,4 +185,5 @@
 
   <script src="simulator.js"></script>
 </body>
+
 </html>

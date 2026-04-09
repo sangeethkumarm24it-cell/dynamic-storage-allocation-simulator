@@ -7,31 +7,11 @@ let simResults = null;
 
 // Colour pools for process assignment
 const PROC_COLORS = [
-  ['#6366f1','#4f46e5'], ['#06b6d4','#0891b2'], ['#10b981','#059669'],
-  ['#f59e0b','#d97706'], ['#ec4899','#db2777'], ['#8b5cf6','#7c3aed'],
-  ['#14b8a6','#0d9488'], ['#f97316','#ea580c'], ['#3b82f6','#2563eb'],
-  ['#a855f7','#9333ea'], ['#22c55e','#16a34a'], ['#e11d48','#be123c'],
+  ['#6366f1', '#4f46e5'], ['#06b6d4', '#0891b2'], ['#10b981', '#059669'],
+  ['#f59e0b', '#d97706'], ['#ec4899', '#db2777'], ['#8b5cf6', '#7c3aed'],
+  ['#14b8a6', '#0d9488'], ['#f97316', '#ea580c'], ['#3b82f6', '#2563eb'],
+  ['#a855f7', '#9333ea'], ['#22c55e', '#16a34a'], ['#e11d48', '#be123c'],
 ];
-
-// ── Presets ─────────────────────────────────────────────────────────────
-const PRESETS = {
-  classic: {
-    blocks: [100, 500, 200, 300, 600, 150],
-    processes: [212, 417, 112, 426, 78]
-  },
-  tight: {
-    blocks: [50, 80, 120, 60, 90],
-    processes: [45, 75, 115, 55, 85, 100]
-  },
-  overflow: {
-    blocks: [200, 150, 100],
-    processes: [50, 180, 90, 60, 250, 110, 40]
-  },
-  exact: {
-    blocks: [100, 200, 300, 150, 250],
-    processes: [100, 200, 300, 150, 250]
-  }
-};
 
 // ── Init ─────────────────────────────────────────────────────────────────
 window.onload = () => {
@@ -45,16 +25,16 @@ function generateBlockInputs() {
   const container = document.getElementById('block-sizes-container');
   container.innerHTML = '';
   // Try to preserve existing values
-  const vals = Array.from({length: n}, (_, i) => {
-    const prev = document.querySelector(`#block-${i+1}`);
+  const vals = Array.from({ length: n }, (_, i) => {
+    const prev = document.querySelector(`#block-${i + 1}`);
     return prev ? prev.value : '';
   });
   for (let i = 0; i < n; i++) {
     const div = document.createElement('div');
     div.className = 'dynamic-field';
     div.innerHTML = `
-      <label for="block-${i+1}">Block ${i+1}</label>
-      <input type="number" id="block-${i+1}" min="1" placeholder="Size" value="${vals[i]}" />
+      <label for="block-${i + 1}">Block ${i + 1}</label>
+      <input type="number" id="block-${i + 1}" min="1" placeholder="Size" value="${vals[i]}" />
     `;
     container.appendChild(div);
   }
@@ -68,31 +48,11 @@ function generateProcessInputs() {
     const div = document.createElement('div');
     div.className = 'dynamic-field';
     div.innerHTML = `
-      <label for="proc-${i+1}">P${i+1}</label>
-      <input type="number" id="proc-${i+1}" min="1" placeholder="Size" value="" />
+      <label for="proc-${i + 1}">P${i + 1}</label>
+      <input type="number" id="proc-${i + 1}" min="1" placeholder="Size" value="" />
     `;
     container.appendChild(div);
   }
-}
-
-// ── Presets ──────────────────────────────────────────────────────────────
-function applyPreset(name) {
-  const p = PRESETS[name];
-  if (!p) return;
-
-  document.getElementById('num-blocks').value = p.blocks.length;
-  generateBlockInputs();
-  p.blocks.forEach((v, i) => {
-    const el = document.getElementById(`block-${i+1}`);
-    if (el) el.value = v;
-  });
-
-  document.getElementById('num-processes').value = p.processes.length;
-  generateProcessInputs();
-  p.processes.forEach((v, i) => {
-    const el = document.getElementById(`proc-${i+1}`);
-    if (el) el.value = v;
-  });
 }
 
 // ── Collect inputs ────────────────────────────────────────────────────────
@@ -262,7 +222,7 @@ function runSimulation() {
 function renderResults(data) {
   renderSummaryCards(data);
   renderAlgoPanel('first-fit', 'panel-first-fit', data.ff, PROC_COLORS, 'ff');
-  renderAlgoPanel('best-fit',  'panel-best-fit',  data.bf, PROC_COLORS, 'bf');
+  renderAlgoPanel('best-fit', 'panel-best-fit', data.bf, PROC_COLORS, 'bf');
   renderAlgoPanel('worst-fit', 'panel-worst-fit', data.wf, PROC_COLORS, 'wf');
   renderComparisonTable(data);
   // reset tabs
@@ -328,12 +288,12 @@ function buildVizSection(result, colors, accent) {
     const totalHeight = Math.max(30, Math.round((size / maxBlock) * MAX_HEIGHT));
     const procIdx = blockProcessMap[b];
     const hasProc = procIdx !== undefined;
-    const [c1, c2] = hasProc ? colors[procIdx % colors.length] : ['#243450','#1e2d44'];
-    const procLabel = hasProc ? `P${procIdx+1}` : '';
+    const [c1, c2] = hasProc ? colors[procIdx % colors.length] : ['#243450', '#1e2d44'];
+    const procLabel = hasProc ? `P${procIdx + 1}` : '';
     const usedLabel = usedSize > 0 ? `${usedSize}` : '';
 
     return `
-      <div class="mem-block" style="animation-delay:${b*0.05}s">
+      <div class="mem-block" style="animation-delay:${b * 0.05}s">
         <div class="mem-block-bar-wrap" style="height:${totalHeight}px; min-width:60px">
           ${hasProc ? `
             <div class="mem-block-used" style="height:${barHeight}px; background: linear-gradient(180deg,${c1},${c2}); position:absolute; bottom:0; width:100%">
@@ -341,10 +301,10 @@ function buildVizSection(result, colors, accent) {
             </div>
           ` : ''}
           ${(!hasProc && remaining[b] < size) ? `
-            <div style="position:absolute;bottom:0;width:100%;height:${Math.round(((size-remaining[b])/size)*totalHeight)}px;background:rgba(100,116,139,0.3)"></div>
+            <div style="position:absolute;bottom:0;width:100%;height:${Math.round(((size - remaining[b]) / size) * totalHeight)}px;background:rgba(100,116,139,0.3)"></div>
           ` : ''}
         </div>
-        <div class="mem-block-label">B${b+1}</div>
+        <div class="mem-block-label">B${b + 1}</div>
         <div class="mem-block-size">${remaining[b]}/${size}</div>
       </div>
     `;
@@ -370,9 +330,9 @@ function buildProcessFlow(result, colors) {
       : '';
     return `
       <div class="proc-chip ${allocated ? 'proc-chip--allocated' : 'proc-chip--failed'}"
-           style="${chipStyle}" title="P${p+1}: ${size} units${allocated ? ` → Block ${blockIdx+1}` : ' → Not Allocated'}">
+           style="${chipStyle}" title="P${p + 1}: ${size} units${allocated ? ` → Block ${blockIdx + 1}` : ' → Not Allocated'}">
         <span class="proc-chip-dot"></span>
-        P${p+1} (${size}) ${allocated ? `→ B${blockIdx+1}` : '✗'}
+        P${p + 1} (${size}) ${allocated ? `→ B${blockIdx + 1}` : '✗'}
       </div>
     `;
   }).join('');
@@ -390,7 +350,7 @@ function buildAllocTable(result, colors, accentLight) {
 
     const blockCell = allocated
       ? `<span class="block-badge" style="background:rgba(${hexToRgb(c1)},0.12);color:${c1};border-color:rgba(${hexToRgb(c1)},0.3)">
-           Block ${blockIdx+1}
+           Block ${blockIdx + 1}
          </span>`
       : `<span style="color:var(--text-muted);font-size:0.78rem">Not Allocated</span>`;
 
@@ -410,7 +370,7 @@ function buildAllocTable(result, colors, accentLight) {
         <td>
           <span style="display:inline-flex;align-items:center;gap:6px">
             <span style="width:8px;height:8px;border-radius:50%;background:${c1};display:inline-block;box-shadow:0 0 6px ${c1}"></span>
-            P${p+1}
+            P${p + 1}
           </span>
         </td>
         <td>${size}</td>
@@ -483,7 +443,7 @@ function buildBlocksRemaining(result) {
     const pct = orig > 0 ? Math.round((rem / orig) * 100) : 0;
     return `
       <div class="block-rem">
-        <div class="block-rem-label">Block ${b+1}</div>
+        <div class="block-rem-label">Block ${b + 1}</div>
         <div class="block-rem-orig">${orig} total</div>
         <div class="block-rem-remain">${rem}</div>
         <div class="block-rem-bar">
@@ -506,14 +466,14 @@ function renderComparisonTable(data) {
   const { ff, bf, wf } = data;
   const algos = [
     { name: 'First Fit', dotClass: 'algo-dot--ff', result: ff },
-    { name: 'Best Fit',  dotClass: 'algo-dot--bf', result: bf },
+    { name: 'Best Fit', dotClass: 'algo-dot--bf', result: bf },
     { name: 'Worst Fit', dotClass: 'algo-dot--wf', result: wf },
   ];
 
   // Determine best/worst for each metric
   const allocated = algos.map(a => a.result.allocatedCount);
-  const intFrags   = algos.map(a => a.result.internalFrag);
-  const extFrags   = algos.map(a => a.result.externalFrag);
+  const intFrags = algos.map(a => a.result.internalFrag);
+  const extFrags = algos.map(a => a.result.externalFrag);
 
   const maxAlloc = Math.max(...allocated);
   const minAlloc = Math.min(...allocated);
@@ -533,7 +493,7 @@ function renderComparisonTable(data) {
       ? Math.round((result.allocatedCount / data.processes.length) * 100)
       : 0;
     const isWinnerRow = result.allocatedCount === maxAlloc &&
-                        result.internalFrag === minIntFrag ? ' class="winner-highlight"' : '';
+      result.internalFrag === minIntFrag ? ' class="winner-highlight"' : '';
     return `
       <tr${isWinnerRow}>
         <td>
@@ -543,10 +503,10 @@ function renderComparisonTable(data) {
           </div>
         </td>
         <td><span class="metric-val ${metricClass(result.allocatedCount, maxAlloc, minAlloc)}">${result.allocatedCount} / ${data.processes.length}</span></td>
-        <td><span class="metric-val ${metricClass(result.failedCount, 0, Math.max(...algos.map(a=>a.result.failedCount)))}">${result.failedCount}</span></td>
+        <td><span class="metric-val ${metricClass(result.failedCount, 0, Math.max(...algos.map(a => a.result.failedCount)))}">${result.failedCount}</span></td>
         <td><span class="metric-val ${metricClass(result.internalFrag, minIntFrag, maxIntFrag)}">${result.internalFrag}</span></td>
         <td><span class="metric-val ${metricClass(result.externalFrag, minExtFrag, maxExtFrag)}">${result.externalFrag}</span></td>
-        <td><span class="metric-val ${metricClass(eff, Math.max(...algos.map(a=>Math.round((a.result.allocatedCount/data.processes.length)*100))), Math.min(...algos.map(a=>Math.round((a.result.allocatedCount/data.processes.length)*100))))}">${eff}%</span></td>
+        <td><span class="metric-val ${metricClass(eff, Math.max(...algos.map(a => Math.round((a.result.allocatedCount / data.processes.length) * 100))), Math.min(...algos.map(a => Math.round((a.result.allocatedCount / data.processes.length) * 100))))}">${eff}%</span></td>
       </tr>
     `;
   }).join('');
@@ -588,10 +548,10 @@ function resetAll() {
 
 // ── Utility: hex to rgb ───────────────────────────────────────────────────
 function hexToRgb(hex) {
-  hex = hex.replace('#','');
-  if (hex.length === 3) hex = hex.split('').map(c => c+c).join('');
+  hex = hex.replace('#', '');
+  if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
   const n = parseInt(hex, 16);
-  return `${(n>>16)&255},${(n>>8)&255},${n&255}`;
+  return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
 }
 
 // ── Toast ─────────────────────────────────────────────────────────────────
